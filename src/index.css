@@ -1,0 +1,18 @@
+:root {
+  --primary-color: olive;
+  --secondary-color: #556b2f;
+  --bg-color: ivory;
+  --text-color: #222;
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+h2 {
+  color: var(--primary-color);
+  text-align: center;
+}

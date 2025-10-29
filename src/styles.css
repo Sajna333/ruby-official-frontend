@@ -1,0 +1,78 @@
+:root {
+  --primary-color: #e63946; /* Ruby red */
+  --secondary-color: #f1faee; /* Light background */
+  --text-color: #1d3557; /* Dark text */
+  --btn-color: var(--primary-color);
+  --btn-text-color: white;
+  --font-family: 'Arial', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Centered form pages (login/register/forgot password) */
+.centered-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+form {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+form input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+form button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background-color: var(--btn-color);
+  color: var(--btn-text-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+form button:hover {
+  background-color: #d62828;
+}
+
+.logo {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,130 @@
+.product-details-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  padding: 50px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.product-image img {
+  width: 400px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.product-info {
+  max-width: 500px;
+  font-family: "Poppins", sans-serif;
+}
+
+.product-title {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.price {
+  margin-top: 10px;
+  font-size: 24px;
+  color: #222;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: gray;
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.stock-msg {
+  margin: 15px 0;
+  color: #e67300;
+  font-weight: 500;
+}
+
+.description {
+  margin-bottom: 20px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Color selector */
+.color-options {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.color-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.color-circle:hover {
+  transform: scale(1.1);
+}
+
+.color-circle.selected {
+  border-color: #000;
+}
+
+/* Quantity section */
+.quantity-section {
+  margin-top: 20px;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.qty-btn {
+  background: #eee;
+  border: none;
+  padding: 8px 14px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Buttons */
+.buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.btn {
+  flex: 1;
+  padding: 12px 18px;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.add-btn {
+  background: #000;
+  color: #fff;
+}
+
+.add-btn:hover {
+  background: #333;
+}
+
+.buy-btn {
+  background: #ff6600;
+  color: #fff;
+}
+
+.buy-btn:hover {
+  background: #ff8533;
+}

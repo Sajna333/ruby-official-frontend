@@ -1,0 +1,233 @@
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 60px;
+  background-color: #f8f6f0;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Left */
+.header-left button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #556b2f;
+}
+
+/* Center */
+.header-center .brand-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #556b2f;
+  text-decoration: none;
+}
+
+/* Right */
+.header-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.header-right button,
+.header-right a {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #556b2f;
+  font-size: 18px;
+  position: relative;
+}
+
+/* Cart Icon */
+.cart-link {
+  position: relative;
+  display: inline-block;
+  color: #556b2f;
+}
+
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  text-align: center;
+}
+
+/* Login Button */
+.login-btn-header {
+  background-color: #556b2f;
+  color: ivory;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.login-btn-header:hover {
+  background-color: #4a5d25;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  background-color: #f8f6f0;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.25);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1200;
+  padding: 20px;
+}
+.sidebar.open {
+  transform: translateX(0);
+}
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #556b2f;
+  margin-bottom: 20px;
+}
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.sidebar-nav a {
+  text-decoration: none;
+  color: #556b2f;
+  font-size: 18px;
+  transition: color 0.2s;
+}
+.sidebar-nav a:hover {
+  color: #4a5d25;
+}
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+.sidebar-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 🌟 Modern Search Bar */
+.search-container {
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 350px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-bar-modern {
+  position: relative;
+  width: 100%;
+}
+.search-bar-modern input {
+  width: 100%;
+  padding: 10px 35px 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+.search-bar-modern input:focus {
+  border-color: #4a5d25;
+  box-shadow: 0 0 6px rgba(74, 93, 37, 0.3);
+}
+.close-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+  cursor: pointer;
+}
+
+/* Dropdown */
+.search-dropdown {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 2100;
+}
+.search-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.search-item:hover {
+  background-color: #f7f7f7;
+}
+.search-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+.no-results {
+  padding: 12px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-center .brand-name {
+    font-size: 20px;
+  }
+  .search-container {
+    width: 80%;
+  }
+  .search-bar-modern input {
+    padding: 8px 32px 8px 12px;
+    font-size: 13px;
+  }
+}
