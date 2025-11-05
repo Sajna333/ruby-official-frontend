@@ -1,0 +1,95 @@
+/* LoginModal.css */
+.login-modal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.login-modal-card {
+  background: #fff;
+  padding: 30px 25px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.login-modal-card h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: #556b2f;
+}
+
+.mobile-input-wrapper {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.mobile-input-wrapper span {
+  flex: 0 0 auto;
+  line-height: 36px;
+  font-weight: bold;
+}
+
+.mobile-input-wrapper input {
+  flex: 1 1 auto;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+}
+
+.mobile-input-wrapper input:focus {
+  border-color: #556b2f;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #556b2f;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  background-color: #708238;
+}
+
+.login-message {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .login-modal-card {
+    padding: 20px 15px;
+  }
+
+  .login-modal-card h2 {
+    font-size: 20px;
+  }
+
+  .mobile-input-wrapper input {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
