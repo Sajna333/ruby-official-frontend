@@ -10,7 +10,8 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/products");
+        // ✅ Fetch from Render backend
+        const res = await axios.get("https://ruby-official-backend.onrender.com/api/products");
         setProducts(res.data);
       } catch (error) {
         console.error("Failed to fetch products:", error);
