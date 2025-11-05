@@ -1,94 +1,83 @@
-/* LoginModal.css */
-.login-modal-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 80vh;
-  padding: 20px;
-  box-sizing: border-box;
-  background: rgba(0, 0, 0, 0.05);
-}
-
-.login-modal-card {
-  background: #fff;
-  padding: 30px 25px;
-  border-radius: 12px;
+/* Login / Register / LoginModal responsive CSS */
+.login-container {
+  width: 90%;
   max-width: 400px;
-  width: 100%;
+  margin: 50px auto;
+  padding: 30px 25px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
 
-.login-modal-card h2 {
+.login-container h2 {
   margin-bottom: 20px;
-  font-size: 22px;
-  color: #556b2f;
+  font-size: 24px;
 }
 
-.mobile-input-wrapper {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 15px;
+.login-container input {
   width: 100%;
-}
-
-.mobile-input-wrapper span {
-  flex: 0 0 auto;
-  line-height: 36px;
-  font-weight: bold;
-}
-
-.mobile-input-wrapper input {
-  flex: 1 1 auto;
-  padding: 10px;
+  padding: 12px;
+  margin-bottom: 15px;
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 16px;
-  outline: none;
+  box-sizing: border-box;
 }
 
-.mobile-input-wrapper input:focus {
-  border-color: #556b2f;
-}
-
-button {
+.login-container button {
   width: 100%;
   padding: 12px;
-  border: none;
-  border-radius: 6px;
   background-color: #556b2f;
   color: #fff;
+  border: none;
+  border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
   transition: 0.3s ease;
 }
 
-button:hover {
+.login-container button:hover {
   background-color: #708238;
 }
 
-.login-message {
-  margin-top: 15px;
+.error {
+  color: red;
+  margin-bottom: 10px;
   font-size: 14px;
-  color: #333;
 }
 
-/* Mobile adjustments */
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .login-container {
+    margin: 40px auto;
+    padding: 25px 20px;
+  }
+
+  .login-container h2 {
+    font-size: 22px;
+  }
+
+  .login-container input,
+  .login-container button {
+    font-size: 15px;
+    padding: 10px;
+  }
+}
+
 @media (max-width: 480px) {
-  .login-modal-card {
+  .login-container {
+    margin: 20px auto;
     padding: 20px 15px;
   }
 
-  .login-modal-card h2 {
+  .login-container h2 {
     font-size: 20px;
   }
 
-  .mobile-input-wrapper input {
-    font-size: 14px;
-    padding: 8px;
-  }
-
-  button {
+  .login-container input,
+  .login-container button {
     font-size: 14px;
     padding: 10px;
   }
