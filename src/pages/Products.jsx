@@ -1,7 +1,8 @@
 // src/pages/Products.jsx
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import API from "../api"; // centralized API
+import API from "../api";
+import { API_URL } from "../config";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -10,10 +11,10 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await API.get("/products");
+        const res = await API.get("/products"); // ✅ Use centralized API
         setProducts(res.data);
       } catch (err) {
-        console.error("Failed to fetch products:", err.message);
+        console.error("❌ Failed to fetch products:", err.message);
       } finally {
         setLoading(false);
       }
@@ -27,7 +28,6 @@ const Products = () => {
   return (
     <div className="products-page" style={{ padding: "20px" }}>
       <h2 style={{ color: "#556b2f", textAlign: "center" }}>Featured Products</h2>
-
       <div
         className="products-grid"
         style={{
@@ -42,13 +42,13 @@ const Products = () => {
             product.images && product.images.length > 0
               ? product.images[0].startsWith("http")
                 ? product.images[0]
-                : `${API.defaults.baseURL.replace(/\/api$/, "")}${product.images[0]}`
-              : `${API.defaults.baseURL.replace(/\/api$/, "")}/uploads/no-image.png`;
+                : `${API_URL}${product.images[0]}`
+              : `${API_URL}/uploads/no-image.png`;
 
           return (
             <div
-              key={product._id}
               className="product-card"
+              key={product._id}
               style={{
                 backgroundColor: "#fff",
                 borderRadius: "15px",
@@ -69,7 +69,7 @@ const Products = () => {
                   borderTopRightRadius: "15px",
                 }}
                 onError={(e) => {
-                  e.target.src = `${API.defaults.baseURL.replace(/\/api$/, "")}/uploads/no-image.png`;
+                  e.target.src = `${API_URL}/uploads/no-image.png`;
                 }}
               />
               <h3>{product.name}</h3>

@@ -2,16 +2,18 @@
 import axios from "axios";
 import { API_URL } from "./config";
 
-// ✅ Base URL fallback
-const BASE_URL = API_URL.replace(/\/+$/, "");
+// ✅ Base URL
+const BASE_URL = (API_URL?.trim() || "https://ruby-official-backend.onrender.com").replace(/\/+$/, "");
 
 // ✅ Axios instance
 const API = axios.create({
   baseURL: `${BASE_URL}/api`,
-  headers: { "Content-Type": "application/json" },
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-// ✅ Attach token automatically
+// ✅ Automatically attach token
 API.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
@@ -28,10 +30,10 @@ API.interceptors.response.use(
     const status = error.response?.status;
     switch (status) {
       case 400:
-        console.warn("⚠️ Bad Request — check your input.");
+        console.warn("⚠️ Bad Request — Check input data.");
         break;
       case 401:
-        console.warn("⚠️ Unauthorized — token may be invalid.");
+        console.warn("⚠️ Unauthorized — token expired or invalid.");
         localStorage.removeItem("token");
         break;
       case 404:

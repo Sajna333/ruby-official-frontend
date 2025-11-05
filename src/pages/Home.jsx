@@ -1,6 +1,6 @@
 // src/pages/Home.jsx
 import React, { useEffect, useState } from "react";
-import API from "../api";
+import API from "../api"; // centralized API
 import ProductCard from "../components/ProductCard";
 import "./Home.css";
 
@@ -15,15 +15,15 @@ const Home = () => {
         setLoading(true);
         setError(null);
 
-        const res = await API.get("/products");
+        const res = await API.get("/products"); // ✅ Use centralized API
         setProducts(res.data);
       } catch (err) {
         console.error("Failed to fetch products:", err);
-        if (err.response) {
-          setError(`Error ${err.response.status}: ${err.response.data.message || "Failed to load products"}`);
-        } else {
-          setError("Network error: Failed to fetch products. Please try again later.");
-        }
+        setError(
+          err.response
+            ? `Error ${err.response.status}: ${err.response.data.message || "Failed to load products"}`
+            : "Network error: Failed to fetch products. Please try again later."
+        );
       } finally {
         setLoading(false);
       }
@@ -53,7 +53,6 @@ const Home = () => {
 
       <section className="featured-products">
         <h2>Featured Products</h2>
-
         {loading ? (
           <p>Loading products...</p>
         ) : error ? (

@@ -1,13 +1,13 @@
 // src/config.js
 
-// ✅ Backend API URL
-export const API_URL = "https://ruby-official-backend.onrender.com"; // Render backend URL
+// ✅ Backend API URL (Render deployment)
+export const API_URL = "https://ruby-official-backend.onrender.com"; 
 
-// ✅ Razorpay key
+// ✅ Razorpay key (frontend only — do NOT expose secret)
 export const RAZORPAY_KEY_ID =
   process.env.REACT_APP_RAZORPAY_KEY_ID || "rzp_test_1234567890abc";
 
-// ✅ Website info
+// ✅ Website / Brand information
 export const WEBSITE_NAME =
   process.env.REACT_APP_WEBSITE_NAME || "Ruby Official";
 
