@@ -7,7 +7,7 @@
 export const API_URL =
   process.env.NODE_ENV === "production"
     ? "https://your-production-domain.com" // 🔁 Replace with your deployed backend URL
-    : "http://localhost:5000"; // Local backend for dev environment
+    : ""; // Local backend for dev environment
 
 /**
  * ✅ Razorpay public key (frontend use only — NOT secret key)
