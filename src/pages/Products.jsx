@@ -1,7 +1,7 @@
+// src/pages/Products.jsx
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { API_URL } from "../config";
+import API from "../api"; // centralized API
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -10,11 +10,10 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const baseURL = (API_URL?.trim() || "https://ruby-official-backend.onrender.com").replace(/\/+$/, "");
-        const res = await axios.get(`${baseURL}/api/products`);
+        const res = await API.get("/products");
         setProducts(res.data);
       } catch (err) {
-        console.error("❌ Failed to fetch products:", err.message);
+        console.error("Failed to fetch products:", err.message);
       } finally {
         setLoading(false);
       }
@@ -43,13 +42,13 @@ const Products = () => {
             product.images && product.images.length > 0
               ? product.images[0].startsWith("http")
                 ? product.images[0]
-                : `${API_URL || "https://ruby-official-backend.onrender.com"}${product.images[0]}`
-              : `${API_URL || "https://ruby-official-backend.onrender.com"}/uploads/no-image.png`;
+                : `${API.defaults.baseURL.replace(/\/api$/, "")}${product.images[0]}`
+              : `${API.defaults.baseURL.replace(/\/api$/, "")}/uploads/no-image.png`;
 
           return (
             <div
-              className="product-card"
               key={product._id}
+              className="product-card"
               style={{
                 backgroundColor: "#fff",
                 borderRadius: "15px",
@@ -70,7 +69,7 @@ const Products = () => {
                   borderTopRightRadius: "15px",
                 }}
                 onError={(e) => {
-                  e.target.src = `${API_URL || "https://ruby-official-backend.onrender.com"}/uploads/no-image.png`;
+                  e.target.src = `${API.defaults.baseURL.replace(/\/api$/, "")}/uploads/no-image.png`;
                 }}
               />
               <h3>{product.name}</h3>
