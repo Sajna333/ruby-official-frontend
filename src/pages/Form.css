@@ -1,0 +1,127 @@
+/* Center Page Layout */
+.form-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f1f3f2;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Login Card */
+.form-card {
+  background: #fff;
+  width: 100%;
+  max-width: 380px;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.form-title {
+  margin-bottom: 25px;
+  color: #2e2e2e;
+  font-weight: 600;
+}
+
+/* Inside Form */
+.form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-content input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-content input:focus {
+  border-color: #3a5a40;
+  box-shadow: 0 0 0 3px rgba(58, 90, 64, 0.15);
+}
+
+/* Button */
+.form-content button {
+  width: 100%;
+  padding: 12px;
+  background-color: #3a5a40;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.form-content button:hover {
+  background-color: #2d4732;
+}
+
+.form-content button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Error Message */
+.error {
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+/* Links */
+.form-links {
+  margin-top: 25px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.form-links a {
+  color: #3a5a40;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.form-links a:hover {
+  text-decoration: underline;
+}
+
+/* ✅ Mobile Responsive */
+@media (max-width: 480px) {
+  .form-card {
+    padding: 30px 20px;
+    max-width: 90%;
+  }
+
+  .form-content input,
+  .form-content button {
+    font-size: 0.95rem;
+    padding: 11px;
+  }
+
+  .form-title {
+    font-size: 1.3rem;
+  }
+}
+/* Success message style */
+.success {
+  color: #2d6a4f;
+  background-color: #d8f3dc;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+}

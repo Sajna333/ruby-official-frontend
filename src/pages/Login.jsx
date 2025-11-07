@@ -1,7 +1,8 @@
+// src/pages/Login.jsx
 import React, { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import "./Login.css";
+import "./Form.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,9 +16,8 @@ const Login = () => {
     setError("");
 
     try {
-      // ✅ AuthContext handles API + token storage
       await login(email, password);
-      navigate("/"); // redirect on success
+      navigate("/");
     } catch (err) {
       console.error("Login Error:", err);
       setError(err?.response?.data?.message || "Login failed. Please try again.");
@@ -25,38 +25,43 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      {error && <p className="error">{error}</p>}
+    <div className="form-page">
+      <div className="form-card">
+        <h2 className="form-title">Login</h2>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        {error && <p className="error">{error}</p>}
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <form onSubmit={handleSubmit} className="form-content">
+          <input
+            type="email"
+            placeholder="Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-      <p>
-        Don’t have an account? <Link to="/register">Register</Link>
-      </p>
-      <p>
-        <Link to="/forgot-password">Forgot Password?</Link>
-      </p>
+          <button type="submit" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
+
+        <div className="form-links">
+          <p>
+            Don’t have an account? <Link to="/register">Register</Link>
+          </p>
+          <p>
+            <Link to="/forgot-password">Forgot Password?</Link>
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
