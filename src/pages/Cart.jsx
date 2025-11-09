@@ -1,8 +1,7 @@
 // src/pages/Cart.jsx
-import React from "react";
+import React, { useContext } from "react";
 import { useCart } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
 import { Link } from "react-router-dom";
 import API from "../api";
 import "./Cart.css";
@@ -13,6 +12,13 @@ const Cart = () => {
 
   const API_URL = process.env.REACT_APP_API_URL;
   const RAZORPAY_KEY = process.env.REACT_APP_RAZORPAY_KEY_ID;
+
+  // Warn in console if API_URL is missing
+  if (!API_URL) {
+    console.warn(
+      "⚠️ REACT_APP_API_URL is not defined. Check your .env file and restart the app."
+    );
+  }
 
   if (cart.length === 0) {
     return (
@@ -92,7 +98,7 @@ const Cart = () => {
           contact: "9999999999",
         },
         theme: {
-          color: process.env.REACT_APP_THEME_COLOR || "#d81b60",
+          color: process.env.REACT_APP_THEME_COLOR || "#olivegreen",
         },
       };
 
@@ -113,18 +119,20 @@ const Cart = () => {
       <h2 className="cart-title">Your Shopping Cart</h2>
 
       {cart.map((item) => {
+        const safeApiUrl = (API_URL || "").replace("/api", "");
+
         const imageUrl =
           item.images?.length > 0
             ? item.images[0].startsWith("http")
               ? item.images[0]
-              : `${API_URL.replace("/api", "")}${item.images[0]}`
-            : `${API_URL.replace("/api", "")}/uploads/no-image.png`;
+              : `${safeApiUrl}${item.images[0]}`
+            : `${safeApiUrl}/uploads/no-image.png`;
 
         return (
           <div key={item._id} className="cart-item">
-            <img src={imageUrl} alt={item.name} />
+            <img src={imageUrl} alt={item.name || "Product"} />
             <div className="cart-item-info">
-              <h4>{item.name}</h4>
+              <h4>{item.name || "Unnamed Product"}</h4>
               <p>
                 ₹{item.price} × {item.quantity}
               </p>
