@@ -52,7 +52,7 @@
 }
 
 .remove-btn {
-  background: #ff4d4d;
+  background: #045a16;
   color: white;
   border: none;
   padding: 6px 12px;
@@ -61,7 +61,7 @@
 }
 
 .remove-btn:hover {
-  background: #808000;
+  background: #127b04;
 }
 
 .cart-summary {
@@ -82,7 +82,7 @@
 }
 
 .clear-btn {
-  background-color: gray;
+  background-color: rgb(16, 121, 10);
 }
 
 .checkout-btn:hover {
