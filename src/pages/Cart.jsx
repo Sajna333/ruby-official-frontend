@@ -13,11 +13,8 @@ const Cart = () => {
   const API_URL = process.env.REACT_APP_API_URL;
   const RAZORPAY_KEY = process.env.REACT_APP_RAZORPAY_KEY_ID;
 
-  // Warn in console if API_URL is missing
   if (!API_URL) {
-    console.warn(
-      "⚠️ REACT_APP_API_URL is not defined. Check your .env file and restart the app."
-    );
+    console.warn("⚠️ REACT_APP_API_URL is not defined. Check your .env file and restart the app.");
   }
 
   if (cart.length === 0) {
@@ -38,7 +35,6 @@ const Cart = () => {
     }
 
     try {
-      // 🟢 Step 1: Create Razorpay order on backend
       const { data } = await API.post(
         "/payment/create-order",
         { amount: totalPrice },
@@ -98,7 +94,7 @@ const Cart = () => {
           contact: "9999999999",
         },
         theme: {
-          color: process.env.REACT_APP_THEME_COLOR || "#olivegreen",
+          color: process.env.REACT_APP_THEME_COLOR || "#4a5d25",
         },
       };
 
@@ -125,7 +121,9 @@ const Cart = () => {
           item.images?.length > 0
             ? item.images[0].startsWith("http")
               ? item.images[0]
-              : `${safeApiUrl}${item.images[0]}`
+              : `${safeApiUrl}/${item.images[0]
+                  .replace(/^\/?api\//, "")
+                  .replace(/^\//, "")}`
             : `${safeApiUrl}/uploads/no-image.png`;
 
         return (
