@@ -1,3 +1,4 @@
+// src/context/AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from "react";
 import API from "../api";
 
@@ -26,8 +27,8 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       setError(null);
 
-      // ✅ Correct endpoint (no extra /api)
-      const { data } = await API.post("/users/login", { email, password });
+      // ✅ Correct backend endpoint
+      const { data } = await API.post("/auth/login", { email, password });
 
       setUser(data.user);
       setToken(data.token);
@@ -50,8 +51,8 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       setError(null);
 
-      // ✅ Correct endpoint (no extra /api)
-      const { data } = await API.post("/users/register", { name, email, password });
+      // ✅ Correct backend endpoint
+      const { data } = await API.post("/auth/register", { name, email, password });
 
       setUser(data.user);
       setToken(data.token);
@@ -77,7 +78,18 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, register, logout, loading, error, setUser }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        token,
+        login,
+        register,
+        logout,
+        loading,
+        error,
+        setUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

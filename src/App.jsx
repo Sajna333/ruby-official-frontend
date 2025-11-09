@@ -23,6 +23,11 @@ import Checkout from "./pages/Checkout";
 import AddProduct from "./pages/AddProduct";
 import Login from "./pages/Login";
 
+// ✅ New Admin Page Imports
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminProducts from "./pages/AdminProducts";
+import AdminOrders from "./pages/AdminOrders";
+
 const App = () => {
   return (
     <ErrorBoundary>
@@ -31,6 +36,7 @@ const App = () => {
           <Header />
           <main style={{ minHeight: "80vh" }}>
             <Routes>
+              {/* Public Routes */}
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
@@ -38,12 +44,19 @@ const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
+
+              {/* User Routes */}
               <Route path="/profile" element={<Profile />} />
               <Route path="/orders" element={<Orders />} />
               <Route path="/products" element={<Products />} />
               <Route path="/products/:id" element={<ProductDetails />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/add-product" element={<AddProduct />} />
+
+              {/* ✅ Admin Routes */}
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/products" element={<AdminProducts />} />
+              <Route path="/admin/orders" element={<AdminOrders />} />
             </Routes>
           </main>
           <Footer />
