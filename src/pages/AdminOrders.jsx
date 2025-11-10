@@ -9,44 +9,43 @@ const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
   const [search, setSearch] = useState("");
 
-  // 🟢 Fetch all orders (Admin only)
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const { data } = await API.get("/orders", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setOrders(data);
+        setOrders(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("❌ Failed to fetch orders:", error);
       }
     };
-
-    fetchOrders();
+    if (token) fetchOrders();
   }, [token]);
 
-  // 🔍 Filter orders by username or email
   const filteredOrders = orders.filter((o) =>
-    o.user?.name?.toLowerCase().includes(search.toLowerCase()) ||
-    o.user?.email?.toLowerCase().includes(search.toLowerCase())
+    (o.user?.name || o.user?.email || "")
+      .toLowerCase()
+      .includes(search.toLowerCase())
   );
 
-  // 🧾 Export CSV
   const handleExport = () => {
-    const csv = [
-      ["User", "Product", "Price", "Shipping", "Ordered At"].join(","),
-      ...orders.map((o) =>
+    const csvRows = [
+      ["User", "Email", "Products", "Total Price", "Shipping", "Ordered At"].join(
+        ","
+      ),
+      ...filteredOrders.map((o) =>
         [
-          o.user?.email || "N/A",
-          o.orderItems.map((i) => i.name).join("; "),
-          "₹" + o.totalPrice,
-          `${o.shippingAddress?.address}, ${o.shippingAddress?.city}`,
-          new Date(o.createdAt).toLocaleString(),
+          `"${o.user?.name || "N/A"}"`,
+          `"${o.user?.email || "N/A"}"`,
+          `"${o.orderItems?.map((i) => i.name).join("; ") || ""}"`,
+          `₹${o.totalPrice || 0}`,
+          `"${(o.shippingAddress?.address || "")}, ${(o.shippingAddress?.city || "")}"`,
+          `"${new Date(o.createdAt).toLocaleString()}"`,
         ].join(",")
       ),
-    ].join("\n");
-
-    const blob = new Blob([csv], { type: "text/csv" });
+    ];
+    const blob = new Blob([csvRows.join("\n")], { type: "text/csv" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = "orders.csv";
@@ -54,31 +53,33 @@ const AdminOrders = () => {
   };
 
   return (
-    <div className="admin-orders-page">
-      <div className="admin-header">
-        <h2>📦 Order Management</h2>
-        <div className="admin-actions">
+    <div className="admin-page">
+      <header className="admin-top">
+        <h1>Order Management</h1>
+        <div className="admin-controls">
           <input
-            type="text"
-            placeholder="Search orders by username or email"
+            aria-label="search orders"
+            placeholder="Search by username or email"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            className="admin-search"
           />
-          <button className="export-btn" onClick={handleExport}>
+          <button className="btn export" onClick={handleExport}>
             Export
           </button>
         </div>
-        <p className="order-count">{filteredOrders.length} orders found</p>
-      </div>
+      </header>
 
-      <div className="admin-table-container">
+      <p className="admin-count">{filteredOrders.length} orders</p>
+
+      <div className="table-wrap">
         <table className="admin-table">
           <thead>
             <tr>
               <th>User</th>
               <th>Items</th>
-              <th>Total Price</th>
-              <th>Shipping Info</th>
+              <th>Total</th>
+              <th>Shipping</th>
               <th>Ordered At</th>
             </tr>
           </thead>
@@ -92,20 +93,23 @@ const AdminOrders = () => {
             ) : (
               filteredOrders.map((order) => (
                 <tr key={order._id}>
-                  <td>
-                    {order.user?.name || "Unknown"} <br />
-                    <small>{order.user?.email}</small>
+                  <td className="user-col">
+                    <div className="user-name">{order.user?.name || "Unknown"}</div>
+                    <div className="user-email">{order.user?.email}</div>
                   </td>
                   <td>
-                    {order.orderItems.map((item, idx) => (
-                      <div key={idx}>
-                        {item.name} × {item.qty}
-                      </div>
-                    ))}
+                    <div className="items-list">
+                      {order.orderItems?.map((it, i) => (
+                        <div key={i} className="item-line">
+                          {it.name} × {it.qty || it.quantity || 1}
+                        </div>
+                      ))}
+                    </div>
                   </td>
-                  <td>₹{order.totalPrice}</td>
+                  <td>₹{order.totalPrice || 0}</td>
                   <td>
-                    {order.shippingAddress?.address},<br />
+                    {order.shippingAddress?.address}
+                    <br />
                     {order.shippingAddress?.city}
                   </td>
                   <td>{new Date(order.createdAt).toLocaleString()}</td>

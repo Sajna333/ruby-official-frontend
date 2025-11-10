@@ -1,0 +1,29 @@
+/* Orders.css - mobile-focused order list */
+.orders-page { padding: 12px; max-width: 720px; margin: 0 auto; font-family: Inter, sans-serif; }
+.orders-header h2 { margin: 8px 0 14px; font-size: 18px; }
+.orders-list { display: flex; flex-direction: column; gap: 12px; }
+
+.order-card {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding: 12px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+  border: 1px solid #f0f0f0;
+}
+
+.order-thumb { width:72px; height:72px; object-fit:cover; border-radius:8px; flex: 0 0 72px; }
+.order-body { flex:1; }
+.order-title { font-weight:600; font-size:15px; margin-bottom:6px; color:#222; }
+.order-meta { font-size:13px; color:#777; display:flex; gap:6px; align-items:center; }
+.status { color:#2b8a3e; font-weight:600; }
+.order-sub { color:#666; font-size:13px; margin-top:6px; }
+.order-arrow { color:#bbb; font-size:22px; padding-left:6px; }
+
+@media (min-width: 900px) {
+  .orders-page { padding: 24px; }
+  .order-card { padding: 16px; }
+  .order-thumb { width:88px; height:88px; }
+}

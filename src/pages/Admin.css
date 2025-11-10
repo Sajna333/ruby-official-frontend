@@ -1,82 +1,112 @@
-/* Admin.css */
-
-.admin-orders-page {
-  padding: 30px;
-  background-color: #fafafa;
-  min-height: 100vh;
+/* Admin.css - responsive admin orders */
+.admin-page {
+  padding: 18px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: Inter, system-ui, -apple-system, Roboto, "Helvetica Neue", Arial;
+  color: #222;
 }
 
-.admin-header {
+.admin-top {
   display: flex;
-  flex-direction: column;
   gap: 12px;
-  margin-bottom: 20px;
-}
-
-.admin-header h2 {
-  color: #333;
-  font-size: 1.6rem;
-  font-weight: 600;
-}
-
-.admin-actions {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
 }
 
-.admin-actions input {
-  width: 60%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
+.admin-top h1 {
+  margin: 0;
+  font-size: 20px;
 }
 
-.export-btn {
-  background-color: #ff6b00;
-  color: white;
+.admin-controls {
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.admin-search {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  min-width: 220px;
+}
+
+.btn {
+  padding: 10px 14px;
+  border-radius: 8px;
   border: none;
-  padding: 10px 16px;
-  border-radius: 6px;
   cursor: pointer;
-  font-weight: 600;
+  background: #6c63ff;
+  color: white;
 }
 
-.export-btn:hover {
-  background-color: #e55b00;
+.btn.export {
+  background: #0f9d58;
 }
 
-.order-count {
-  font-size: 0.9rem;
+.admin-count {
+  margin: 8px 0 16px;
   color: #555;
 }
 
-.admin-table-container {
+.table-wrap {
+  overflow-x: auto;
   background: white;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  overflow-x: auto;
+  box-shadow: 0 6px 20px rgba(20,20,20,0.05);
 }
 
 .admin-table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 900px;
 }
 
-.admin-table th,
-.admin-table td {
-  padding: 12px 16px;
-  border-bottom: 1px solid #eee;
+.admin-table thead {
+  background: #f7f8fb;
+}
+
+.admin-table th, .admin-table td{
+  padding: 12px 14px;
   text-align: left;
+  border-bottom: 1px solid #eef0f3;
   vertical-align: top;
+  font-size: 14px;
 }
 
-.admin-table th {
-  background: #f5f5f5;
-  font-weight: 600;
-}
+.user-name { font-weight: 600; }
+.user-email { font-size: 12px; color: #666; margin-top: 4px; }
 
-.admin-table tr:hover {
-  background: #f9f9f9;
+.items-list { max-width: 360px }
+.item-line { margin-bottom: 6px; font-size: 13px; color: #333; }
+
+/* Responsive: stack rows into cards on narrow screens */
+@media (max-width: 720px) {
+  .admin-table {
+    min-width: 0;
+    display:block;
+  }
+  .admin-table thead { display:none; }
+  .admin-table tbody { display:block; }
+  .admin-table tr {
+    display:block;
+    margin: 10px 12px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #f0f0f0;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  }
+  .admin-table td {
+    display:flex;
+    justify-content: space-between;
+    padding: 8px 6px;
+    border: none;
+  }
+  .admin-table td::before { display:none; }
+  .user-col { flex: 1 1 50%; }
+  .items-list { flex: 1 1 50%; text-align:right; }
 }

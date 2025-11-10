@@ -2,37 +2,20 @@
 import React, { useContext } from "react";
 import { useCart } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
-import { Link } from "react-router-dom";
-import API from "../api";
 import "./Cart.css";
+import API from "../api";
 
 const Cart = () => {
   const { cart, removeFromCart, clearCart, totalPrice } = useCart();
   const { user, token } = useContext(AuthContext);
 
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = process.env.REACT_APP_API_URL?.replace(/\/$/, "");
   const RAZORPAY_KEY = process.env.REACT_APP_RAZORPAY_KEY_ID;
 
-  if (!API_URL) {
-    console.warn("⚠️ REACT_APP_API_URL is not defined. Check your .env file and restart the app.");
-  }
-
-  if (cart.length === 0) {
-    return (
-      <div className="empty-cart">
-        <h2>Your Cart is Empty 🛒</h2>
-        <Link to="/products" className="btn">
-          Shop Now
-        </Link>
-      </div>
-    );
-  }
+  if (!cart) return null;
 
   const handlePayment = async () => {
-    if (!user) {
-      alert("Please login before making a purchase!");
-      return;
-    }
+    if (!user || !token) return alert("Please login before making a purchase!");
 
     try {
       const { data } = await API.post(
@@ -57,11 +40,12 @@ const Cart = () => {
                 name: item.name,
                 qty: item.quantity,
                 price: item.price,
+                image: item.images?.[0] || "",
               })),
               shippingAddress: {
-                address: "12 Main Street",
-                city: "Kochi",
-                postalCode: "682001",
+                address: "Customer address",
+                city: "City",
+                postalCode: "000000",
                 country: "India",
               },
               paymentMethod: "Razorpay",
@@ -91,18 +75,16 @@ const Cart = () => {
         prefill: {
           name: user?.name || "",
           email: user?.email || "",
-          contact: "9999999999",
         },
         theme: {
-          color: process.env.REACT_APP_THEME_COLOR || "#4a5d25",
+          color: process.env.REACT_APP_THEME_COLOR || "#5e8cff",
         },
       };
 
       const rzp = new window.Razorpay(options);
       rzp.open();
-
       rzp.on("payment.failed", function (response) {
-        alert("❌ Payment Failed: " + response.error.description);
+        alert("❌ Payment Failed: " + (response.error?.description || "Unknown"));
       });
     } catch (err) {
       console.error("❌ Payment initiation failed:", err);
@@ -110,52 +92,54 @@ const Cart = () => {
     }
   };
 
+  if (cart.length === 0) {
+    return (
+      <div className="empty-cart">
+        <h2>Your Cart is Empty 🛒</h2>
+        <a href="/products" className="btn primary">Shop Now</a>
+      </div>
+    );
+  }
+
   return (
-    <div className="cart-container">
-      <h2 className="cart-title">Your Shopping Cart</h2>
+    <div className="cart-page">
+      <h2 className="cart-title">Cart</h2>
 
-      {cart.map((item) => {
-        const safeApiUrl = (API_URL || "").replace("/api", "");
+      <div className="cart-list">
+        {cart.map((item) => {
+          const image = item.images?.[0] || "uploads/no-image.png";
+          const imageUrl = image.startsWith("http")
+            ? image
+            : `${API_URL}/${image.replace(/^\/?/, "")}`;
 
-        const imageUrl =
-          item.images?.length > 0
-            ? item.images[0].startsWith("http")
-              ? item.images[0]
-              : `${safeApiUrl}/${item.images[0]
-                  .replace(/^\/?api\//, "")
-                  .replace(/^\//, "")}`
-            : `${safeApiUrl}/uploads/no-image.png`;
-
-        return (
-          <div key={item._id} className="cart-item">
-            <img src={imageUrl} alt={item.name || "Product"} />
-            <div className="cart-item-info">
-              <h4>{item.name || "Unnamed Product"}</h4>
-              <p>
-                ₹{item.price} × {item.quantity}
-              </p>
-              <p>
-                <strong>Total:</strong> ₹{item.price * item.quantity}
-              </p>
+          return (
+            <div className="cart-item" key={item._id}>
+              <img src={imageUrl} alt={item.name} />
+              <div className="cart-info">
+                <h4>{item.name}</h4>
+                <p className="qty">Qty: {item.quantity}</p>
+                <p className="price">₹{item.price} each</p>
+                <p className="line-total">Total: ₹{item.price * item.quantity}</p>
+                <div className="cart-actions">
+                  <button className="link" onClick={() => removeFromCart(item._id)}>
+                    Remove
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="cart-item-actions">
-              <button
-                className="remove-btn"
-                onClick={() => removeFromCart(item._id)}
-              >
-                Remove
-              </button>
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
 
       <div className="cart-summary">
-        <h3>Total: ₹{totalPrice}</h3>
-        <button className="checkout-btn" onClick={handlePayment}>
-          Proceed to Pay
+        <div className="summary-row">
+          <span>Total</span>
+          <strong>₹{totalPrice}</strong>
+        </div>
+        <button className="btn primary checkout" onClick={handlePayment}>
+          Continue to Pay
         </button>
-        <button className="clear-btn" onClick={clearCart}>
+        <button className="btn clear" onClick={clearCart}>
           Clear Cart
         </button>
       </div>
