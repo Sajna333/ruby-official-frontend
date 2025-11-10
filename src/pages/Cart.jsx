@@ -14,7 +14,7 @@ const Cart = () => {
 
   if (!cart) return null;
 
-  // 🧾 Handle payment using Razorpay
+  // 🧾 Handle Razorpay Payment
   const handlePayment = async () => {
     if (!user || !token) {
       alert("Please login before making a purchase!");
@@ -97,7 +97,7 @@ const Cart = () => {
     }
   };
 
-  // 🛒 Empty cart
+  // 🛒 Empty Cart Display
   if (cart.length === 0) {
     return (
       <div className="empty-cart">
@@ -115,12 +115,14 @@ const Cart = () => {
 
       <div className="cart-list">
         {cart.map((item) => {
-          // ✅ Fix: properly build image URL
-          const image = item.images?.[0] || "uploads/no-image.png";
+          // ✅ Build image URL correctly for Render / Localhost
+          const backendBase = API_URL?.includes("localhost")
+            ? "http://localhost:5000/api"
+            : "https://ruby-official-backend.onrender.com/api";
 
-          const imageUrl = image.startsWith("http")
-            ? image
-            : `${API_URL}/uploads/${image
+          const imageUrl = item.images?.[0]?.startsWith("http")
+            ? item.images[0]
+            : `${backendBase.replace(/\/api$/, "")}/uploads/${(item.images?.[0] || "no-image.png")
                 .replace(/^uploads\//, "")
                 .replace(/^\/?/, "")}`;
 
@@ -130,7 +132,7 @@ const Cart = () => {
                 src={imageUrl}
                 alt={item.name || "Product"}
                 onError={(e) => {
-                  e.target.src = `${API_URL}/uploads/no-image.png`;
+                  e.target.src = `${backendBase.replace(/\/api$/, "")}/uploads/no-image.png`;
                 }}
               />
               <div className="cart-info">
