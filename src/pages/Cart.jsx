@@ -14,8 +14,12 @@ const Cart = () => {
 
   if (!cart) return null;
 
+  // 🧾 Handle payment using Razorpay
   const handlePayment = async () => {
-    if (!user || !token) return alert("Please login before making a purchase!");
+    if (!user || !token) {
+      alert("Please login before making a purchase!");
+      return;
+    }
 
     try {
       const { data } = await API.post(
@@ -83,6 +87,7 @@ const Cart = () => {
 
       const rzp = new window.Razorpay(options);
       rzp.open();
+
       rzp.on("payment.failed", function (response) {
         alert("❌ Payment Failed: " + (response.error?.description || "Unknown"));
       });
@@ -92,36 +97,54 @@ const Cart = () => {
     }
   };
 
+  // 🛒 Empty cart
   if (cart.length === 0) {
     return (
       <div className="empty-cart">
         <h2>Your Cart is Empty 🛒</h2>
-        <a href="/products" className="btn primary">Shop Now</a>
+        <a href="/products" className="btn primary">
+          Shop Now
+        </a>
       </div>
     );
   }
 
   return (
     <div className="cart-page">
-      <h2 className="cart-title">Cart</h2>
+      <h2 className="cart-title">Your Shopping Cart</h2>
 
       <div className="cart-list">
         {cart.map((item) => {
+          // ✅ Fix: properly build image URL
           const image = item.images?.[0] || "uploads/no-image.png";
+
           const imageUrl = image.startsWith("http")
             ? image
-            : `${API_URL}/${image.replace(/^\/?/, "")}`;
+            : `${API_URL}/uploads/${image
+                .replace(/^uploads\//, "")
+                .replace(/^\/?/, "")}`;
 
           return (
             <div className="cart-item" key={item._id}>
-              <img src={imageUrl} alt={item.name} />
+              <img
+                src={imageUrl}
+                alt={item.name || "Product"}
+                onError={(e) => {
+                  e.target.src = `${API_URL}/uploads/no-image.png`;
+                }}
+              />
               <div className="cart-info">
                 <h4>{item.name}</h4>
                 <p className="qty">Qty: {item.quantity}</p>
                 <p className="price">₹{item.price} each</p>
-                <p className="line-total">Total: ₹{item.price * item.quantity}</p>
+                <p className="line-total">
+                  <strong>Total:</strong> ₹{item.price * item.quantity}
+                </p>
                 <div className="cart-actions">
-                  <button className="link" onClick={() => removeFromCart(item._id)}>
+                  <button
+                    className="link"
+                    onClick={() => removeFromCart(item._id)}
+                  >
                     Remove
                   </button>
                 </div>
