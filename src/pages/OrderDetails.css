@@ -1,0 +1,65 @@
+/* OrderDetails.css */
+.order-details-page {
+  padding: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: Inter, sans-serif;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #556b2f;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.order-details-card {
+  display: flex;
+  gap: 14px;
+  background: #fff;
+  padding: 14px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+}
+
+.detail-image {
+  width: 90px;
+  height: 90px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.order-info h3 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.delivery-status {
+  margin-top: 20px;
+  padding: 12px;
+  background: #f9fff4;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.rating-section {
+  margin-top: 20px;
+}
+
+.stars {
+  display: flex;
+  gap: 6px;
+  font-size: 24px;
+  color: #ccc;
+}
+
+.stars span {
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.stars span.filled {
+  color: #556b2f;
+}
