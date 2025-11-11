@@ -81,7 +81,7 @@ const Cart = () => {
           email: user?.email || "",
         },
         theme: {
-          color: process.env.REACT_APP_THEME_COLOR || "#155211ff",
+          color: process.env.REACT_APP_THEME_COLOR || "#556b2f8c",
         },
       };
 
@@ -163,7 +163,7 @@ const Cart = () => {
           <strong>₹{totalPrice}</strong>
         </div>
         <button className="btn primary checkout" onClick={handlePayment}>
-          checkou
+          checkout
         </button>
         <button className="btn clear" onClick={clearCart}>
           Clear Cart
