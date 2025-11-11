@@ -14,7 +14,7 @@ const Cart = () => {
 
   if (!cart) return null;
 
-  // 🧾 Handle Razorpay Payment
+  // 🧾 Razorpay Payment
   const handlePayment = async () => {
     if (!user || !token) {
       alert("Please login before making a purchase!");
@@ -97,7 +97,7 @@ const Cart = () => {
     }
   };
 
-  // 🛒 Empty Cart Display
+  // 🛒 Empty Cart
   if (cart.length === 0) {
     return (
       <div className="empty-cart">
@@ -115,14 +115,15 @@ const Cart = () => {
 
       <div className="cart-list">
         {cart.map((item) => {
-          // ✅ Build image URL correctly for Render / Localhost
+          // ✅ Detect environment (local / Render)
           const backendBase = API_URL?.includes("localhost")
-            ? "http://localhost:5000/api"
-            : "https://ruby-official-backend.onrender.com/api";
+            ? "http://localhost:5000"
+            : "https://ruby-official-backend.onrender.com";
 
+          // ✅ Build correct image URL
           const imageUrl = item.images?.[0]?.startsWith("http")
             ? item.images[0]
-            : `${backendBase.replace(/\/api$/, "")}/uploads/${(item.images?.[0] || "no-image.png")
+            : `${backendBase}/uploads/${(item.images?.[0] || "no-image.png")
                 .replace(/^uploads\//, "")
                 .replace(/^\/?/, "")}`;
 
@@ -132,7 +133,7 @@ const Cart = () => {
                 src={imageUrl}
                 alt={item.name || "Product"}
                 onError={(e) => {
-                  e.target.src = `${backendBase.replace(/\/api$/, "")}/uploads/no-image.png`;
+                  e.target.src = `${backendBase}/uploads/no-image.png`;
                 }}
               />
               <div className="cart-info">
@@ -162,7 +163,7 @@ const Cart = () => {
           <strong>₹{totalPrice}</strong>
         </div>
         <button className="btn primary checkout" onClick={handlePayment}>
-          Continue to Pay
+          Proceed to Pay
         </button>
         <button className="btn clear" onClick={clearCart}>
           Clear Cart

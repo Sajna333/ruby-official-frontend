@@ -2,15 +2,30 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import API from "../api";
 
+// 🔐 Create global auth context
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => JSON.parse(localStorage.getItem("user")) || null);
-  const [token, setToken] = useState(() => localStorage.getItem("token") || null);
+  // ✅ Safe JSON parsing function
+  const safeParse = (key, isJson = true) => {
+    try {
+      const value = localStorage.getItem(key);
+      if (!value || value === "undefined" || value === "null") return null;
+      return isJson ? JSON.parse(value) : value;
+    } catch (error) {
+      console.warn(`⚠️ Failed to parse localStorage key "${key}":`, error);
+      localStorage.removeItem(key); // remove corrupted entry
+      return null;
+    }
+  };
+
+  // ✅ Initialize user/token safely
+  const [user, setUser] = useState(() => safeParse("user"));
+  const [token, setToken] = useState(() => safeParse("token", false));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // 🔄 Persist user and token in localStorage
+  // 🔄 Persist user and token in localStorage safely
   useEffect(() => {
     if (user) localStorage.setItem("user", JSON.stringify(user));
     else localStorage.removeItem("user");
@@ -27,7 +42,6 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       setError(null);
 
-      // ✅ Correct backend endpoint
       const { data } = await API.post("/auth/login", { email, password });
 
       setUser(data.user);
@@ -51,8 +65,11 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       setError(null);
 
-      // ✅ Correct backend endpoint
-      const { data } = await API.post("/auth/register", { name, email, password });
+      const { data } = await API.post("/auth/register", {
+        name,
+        email,
+        password,
+      });
 
       setUser(data.user);
       setToken(data.token);
@@ -77,6 +94,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
   };
 
+  // ✅ Context value
   return (
     <AuthContext.Provider
       value={{
