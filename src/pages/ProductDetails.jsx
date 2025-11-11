@@ -37,7 +37,7 @@ const ProductDetails = () => {
   if (!product) return <p>No product found.</p>;
 
   const getImageUrl = (imgPath) => {
-    if (!imgPath) return `${API_URL}/uploads/no-image.png`;
+    if (!imgPath) return `${API_URL}/uploads/no-image.jpg`;
     if (imgPath.startsWith("http")) return imgPath;
     return `${API_URL}${imgPath}`;
   };
@@ -45,7 +45,7 @@ const ProductDetails = () => {
   const imageUrl =
     product.images && product.images.length > 0
       ? getImageUrl(product.images[0])
-      : `${API_URL}/uploads/no-image.png`;
+      : `${API_URL}/uploads/no-image.jpg`;
 
   const handleAddToCart = () => {
     addToCart({ ...product, quantity });
@@ -75,19 +75,7 @@ const ProductDetails = () => {
         <p className="description">{product.description}</p>
 
         <div className="color-section">
-          <strong>Color:</strong> Multicolor
-          <div className="color-options">
-            {["#ff0000", "#00ff00", "#0000ff", "#800080", "#000000", "#ffc0cb"].map(
-              (color) => (
-                <div
-                  key={color}
-                  className={`color-circle ${selectedColor === color ? "selected" : ""}`}
-                  style={{ backgroundColor: color }}
-                  onClick={() => setSelectedColor(color)}
-                />
-              )
-            )}
-          </div>
+          <strong>Color:</strong> All colors available
         </div>
 
         <div className="quantity-section">

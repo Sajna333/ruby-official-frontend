@@ -20,7 +20,7 @@
 .cart-info h4 { margin:0 0 6px; font-size:15px; }
 .qty, .price, .line-total { margin:4px 0; color:#555; font-size:13px; }
 .cart-actions { margin-top:8px; }
-.link { background:none; border:none; color:#d9534f; cursor:pointer; padding:0; font-weight:600; }
+.link { background:none; border:none; color:#556b2f8c; cursor:pointer; padding:0; font-weight:600; }
 
 .cart-summary {
   position: sticky;

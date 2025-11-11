@@ -133,7 +133,7 @@ const Cart = () => {
                 src={imageUrl}
                 alt={item.name || "Product"}
                 onError={(e) => {
-                  e.target.src = `${backendBase}/uploads/no-image.png`;
+                  e.target.src = `${backendBase}/uploads/.jpg`;
                 }}
               />
               <div className="cart-info">
