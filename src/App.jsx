@@ -22,7 +22,7 @@ import ProductDetails from "./pages/ProductDetails";
 import Checkout from "./pages/Checkout";
 import AddProduct from "./pages/AddProduct";
 import Login from "./pages/Login";
-
+import OrderDetails from "./pages/OrderDetails";
 // ✅ New Admin Page Imports
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminProducts from "./pages/AdminProducts";
@@ -52,6 +52,7 @@ const App = () => {
               <Route path="/products/:id" element={<ProductDetails />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/add-product" element={<AddProduct />} />
+              <Route path="/orders/:id" element={<OrderDetails />} />
 
               {/* ✅ Admin Routes */}
               <Route path="/admin" element={<AdminDashboard />} />
