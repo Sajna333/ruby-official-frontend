@@ -49,4 +49,25 @@ API.interceptors.response.use(
   }
 );
 
+// ✅ Auth functions
+export const registerUser = async (name, email, password) => {
+  const response = await API.post("/auth/register", { name, email, password });
+  return response.data;
+};
+
+export const loginUser = async (email, password) => {
+  const response = await API.post("/auth/login", { email, password });
+  return response.data;
+};
+
+export const mobileLogin = async (mobile) => {
+  const response = await API.post("/auth/mobile-login", { mobile });
+  return response.data;
+};
+
+export const getUserProfile = async () => {
+  const response = await API.get("/auth/profile");
+  return response.data;
+};
+
 export default API;

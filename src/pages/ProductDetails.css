@@ -112,12 +112,16 @@
 }
 
 .add-btn {
-  background: #000;
-  color: #fff;
+  background-color: #556b2f !important;
+  color: ivory !important;
+  border: none !important;
 }
 
-.add-btn:hover {
-  background: #333;
+.add-btn:hover,
+.add-btn:focus,
+.add-btn:active {
+  background-color: #485a25 !important;
+  color: ivory !important;
 }
 
 .buy-btn {

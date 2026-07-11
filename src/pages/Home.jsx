@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import API from "../api"; // centralized API
 import ProductCard from "../components/ProductCard";
+import HeroCarousel from "../components/HeroCarousel";
 import "./Home.css";
 
 const Home = () => {
@@ -34,22 +35,7 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      <section
-        className="hero-section"
-        style={{
-          backgroundImage: 'url("/assets/images/hero-background.jpg")',
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <div className="hero-overlay">
-          <div className="hero-text">
-            <h1>Ruby Official</h1>
-            <p>Elegant. Custom. Timeless — Discover your perfect fit.</p>
-          </div>
-        </div>
-      </section>
+      <HeroCarousel />
 
       <section className="featured-products">
         <h2>Featured Products</h2>

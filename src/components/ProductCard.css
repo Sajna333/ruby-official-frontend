@@ -61,6 +61,19 @@
   transition: 0.3s ease;
 }
 
+.cart-btn {
+  background-color: #556b2f !important;
+  color: ivory !important;
+  border: none !important;
+}
+
+.cart-btn:hover,
+.cart-btn:focus,
+.cart-btn:active {
+  background-color: #485a25 !important;
+  color: ivory !important;
+}
+
 .btn:hover {
   background-color: #485a25;
 }
