@@ -11,7 +11,7 @@ const Footer = () => (
       <Link to="/contact">Contact</Link>
       <Link to="/cart">Cart</Link>
     </div>
-    <p>© 2025 Ruby Official. All Rights Reserved.</p>
+    <p>© 2026 Ruby Official. All Rights Reserved.</p>
   </footer>
 );
 
