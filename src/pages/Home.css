@@ -95,8 +95,29 @@
   .featured-products {
     padding: 30px 20px;
   }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
   .product-card img {
-    height: 200px;
+    height: 140px;
+  }
+
+  .product-card h3 {
+    font-size: 14px;
+    margin: 8px 0 4px;
+  }
+
+  .product-card p {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    margin-bottom: 10px;
   }
 }
-  
