@@ -11,6 +11,12 @@ const AdminProducts = () => {
   const [imageFile, setImageFile] = useState(null);
   const [saving, setSaving] = useState(false);
 
+  // ➕ Add product state
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newProduct, setNewProduct] = useState({ name: "", price: "", category: "" });
+  const [newImageFile, setNewImageFile] = useState(null);
+  const [adding, setAdding] = useState(false);
+
   const fetchProducts = async () => {
     const { data } = await API.get("/products");
     setProducts(data);
@@ -69,9 +75,91 @@ const AdminProducts = () => {
     }
   };
 
+  // ➕ Handle Add Product submit
+  const handleAddProduct = async (e) => {
+    e.preventDefault();
+
+    if (!newProduct.name || !newProduct.price || !newProduct.category) {
+      alert("Please fill all fields before adding a product.");
+      return;
+    }
+
+    setAdding(true);
+    try {
+      const formData = new FormData();
+      formData.append("name", newProduct.name);
+      formData.append("price", newProduct.price);
+      formData.append("category", newProduct.category);
+      if (newImageFile) {
+        formData.append("images", newImageFile); // same field name backend expects
+      }
+
+      await API.post("/products", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      await fetchProducts();
+      setNewProduct({ name: "", price: "", category: "" });
+      setNewImageFile(null);
+      setShowAddForm(false);
+    } catch (error) {
+      console.error("❌ Add product failed:", error);
+      alert("Failed to add product. Check console for details.");
+    } finally {
+      setAdding(false);
+    }
+  };
+
   return (
     <div className="admin-products">
       <h2>Manage Products</h2>
+
+      <div className="admin-products-toolbar">
+        <button
+          className="admin-add-btn"
+          onClick={() => setShowAddForm(!showAddForm)}
+        >
+          {showAddForm ? "Cancel" : "+ Add Product"}
+        </button>
+      </div>
+
+      {showAddForm && (
+        <form className="admin-add-form" onSubmit={handleAddProduct}>
+          <input
+            type="text"
+            placeholder="Product name"
+            value={newProduct.name}
+            onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+            required
+          />
+          <input
+            type="number"
+            placeholder="Price"
+            value={newProduct.price}
+            onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Category"
+            value={newProduct.category}
+            onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
+            required
+          />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setNewImageFile(e.target.files[0])}
+          />
+          <button type="submit" className="admin-add-btn" disabled={adding}>
+            {adding ? "Adding..." : "Save Product"}
+          </button>
+        </form>
+      )}
+
       <table>
         <thead>
           <tr>
