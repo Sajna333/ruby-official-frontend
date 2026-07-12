@@ -1,3 +1,4 @@
+// src/components/Header.jsx
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -9,7 +10,8 @@ import {
 } from "react-icons/fi";
 import { useCart } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
-import axios from "axios";
+import API from "../api";
+import { API_URL } from "../config";
 import "./Header.css";
 
 const Header = () => {
@@ -37,9 +39,7 @@ const Header = () => {
         return;
       }
       try {
-        const res = await axios.get(
-          `http://localhost:5000/api/products?search=${searchTerm}`
-        );
+        const res = await API.get(`/products?search=${searchTerm}`);
         setSearchResults(res.data);
       } catch (error) {
         console.error("Error fetching search results:", error);
@@ -49,12 +49,16 @@ const Header = () => {
     return () => clearTimeout(delayDebounce);
   }, [searchTerm]);
 
-  // ✅ Handle product click (correct route)
-  const handleProductClick = (id) => {
+  const closeSearch = () => {
     setSearchOpen(false);
     setSearchTerm("");
     setSearchResults([]);
-    setTimeout(() => navigate(`/products/${id}`), 150); // fixed route path
+  };
+
+  // ✅ Handle product click (correct route)
+  const handleProductClick = (id) => {
+    closeSearch();
+    setTimeout(() => navigate(`/products/${id}`), 150);
   };
 
   return (
@@ -138,53 +142,58 @@ const Header = () => {
         </nav>
       </div>
 
-      {/* Search Bar */}
+      {/* Search Backdrop + Bar */}
       {searchOpen && (
-        <div className="search-container">
-          <div className="search-bar-modern">
-            <input
-              type="text"
-              placeholder="Search for products..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              autoFocus
-            />
-            {searchTerm && (
-              <FiX
-                className="close-icon"
-                onClick={() => setSearchTerm("")}
-                size={18}
+        <>
+          <div className="search-backdrop" onClick={closeSearch}></div>
+          <div className="search-container">
+            <div className="search-bar-modern">
+              <input
+                type="text"
+                placeholder="Search for products..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                autoFocus
               />
-            )}
-          </div>
-
-          {/* Search Results Dropdown */}
-          {searchTerm && (
-            <div className="search-dropdown">
-              {searchResults.length > 0 ? (
-                searchResults.map((product) => (
-                  <div
-                    key={product._id}
-                    className="search-item"
-                    onClick={() => handleProductClick(product._id)}
-                  >
-                    <img
-                      src={
-                        product.images?.length
-                          ? `http://localhost:5000${product.images[0]}`
-                          : "https://via.placeholder.com/50"
-                      }
-                      alt={product.name}
-                    />
-                    <span>{product.name}</span>
-                  </div>
-                ))
-              ) : (
-                <p className="no-results">No products found</p>
+              {searchTerm && (
+                <FiX
+                  className="close-icon"
+                  onClick={() => setSearchTerm("")}
+                  size={18}
+                />
               )}
             </div>
-          )}
-        </div>
+
+            {/* Search Results Dropdown */}
+            {searchTerm && (
+              <div className="search-dropdown">
+                {searchResults.length > 0 ? (
+                  searchResults.map((product) => (
+                    <div
+                      key={product._id}
+                      className="search-item"
+                      onClick={() => handleProductClick(product._id)}
+                    >
+                      <img
+                        src={
+                          product.images?.length
+                            ? (product.images[0].startsWith("http")
+                                ? product.images[0]
+                                : `${API_URL}${product.images[0]}`)
+                            : "https://via.placeholder.com/50"
+                        }
+                        alt={product.name}
+                      />
+                      <span>{product.name}</span>
+                    </div>
+                  ))
+                ) : (
+                  <p className="no-results">No products found</p>
+                )}
+              </div>
+            )}
+          </div>
+        </>
       )}
     </>
   );

@@ -7,13 +7,13 @@ const AdminProducts = () => {
   const { token } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [editingId, setEditingId] = useState(null);
-  const [form, setForm] = useState({ name: "", price: "", category: "" });
+  const [form, setForm] = useState({ name: "", price: "", category: "", description: "" });
   const [imageFile, setImageFile] = useState(null);
   const [saving, setSaving] = useState(false);
 
   // ➕ Add product state
   const [showAddForm, setShowAddForm] = useState(false);
-  const [newProduct, setNewProduct] = useState({ name: "", price: "", category: "" });
+  const [newProduct, setNewProduct] = useState({ name: "", price: "", category: "", description: "" });
   const [newImageFile, setNewImageFile] = useState(null);
   const [adding, setAdding] = useState(false);
 
@@ -37,7 +37,12 @@ const AdminProducts = () => {
 
   const startEdit = (p) => {
     setEditingId(p._id);
-    setForm({ name: p.name, price: p.price, category: p.category });
+    setForm({
+      name: p.name,
+      price: p.price,
+      category: p.category,
+      description: p.description || "",
+    });
     setImageFile(null);
   };
 
@@ -53,6 +58,7 @@ const AdminProducts = () => {
       formData.append("name", form.name);
       formData.append("price", form.price);
       formData.append("category", form.category);
+      formData.append("description", form.description);
       if (imageFile) {
         formData.append("images", imageFile); // field name must match backend: upload.array("images")
       }
@@ -90,6 +96,7 @@ const AdminProducts = () => {
       formData.append("name", newProduct.name);
       formData.append("price", newProduct.price);
       formData.append("category", newProduct.category);
+      formData.append("description", newProduct.description);
       if (newImageFile) {
         formData.append("images", newImageFile); // same field name backend expects
       }
@@ -102,7 +109,7 @@ const AdminProducts = () => {
       });
 
       await fetchProducts();
-      setNewProduct({ name: "", price: "", category: "" });
+      setNewProduct({ name: "", price: "", category: "", description: "" });
       setNewImageFile(null);
       setShowAddForm(false);
     } catch (error) {
@@ -149,6 +156,13 @@ const AdminProducts = () => {
             onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
             required
           />
+          <textarea
+            placeholder="Product description"
+            value={newProduct.description}
+            onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+            rows={3}
+            style={{ width: "100%", flex: "1 1 100%" }}
+          />
           <input
             type="file"
             accept="image/*"
@@ -167,6 +181,7 @@ const AdminProducts = () => {
             <th>Name</th>
             <th>Price</th>
             <th>Category</th>
+            <th>Description</th>
             <th></th>
           </tr>
         </thead>
@@ -201,6 +216,14 @@ const AdminProducts = () => {
                   />
                 </td>
                 <td>
+                  <textarea
+                    value={form.description}
+                    onChange={(e) => setForm({ ...form, description: e.target.value })}
+                    rows={2}
+                    style={{ width: "100%" }}
+                  />
+                </td>
+                <td>
                   <button onClick={() => handleSave(p._id)} disabled={saving}>
                     {saving ? "Saving..." : "Save"}
                   </button>
@@ -229,6 +252,9 @@ const AdminProducts = () => {
                 <td>{p.name}</td>
                 <td>₹{p.price}</td>
                 <td>{p.category}</td>
+                <td style={{ maxWidth: 220, fontSize: 13, color: "#555" }}>
+                  {p.description || <em>No description</em>}
+                </td>
                 <td>
                   <button onClick={() => startEdit(p)}>Edit</button>
                   <button onClick={() => handleDelete(p._id)}>Delete</button>
