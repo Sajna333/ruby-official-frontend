@@ -16,8 +16,13 @@ const Login = () => {
     setError("");
 
     try {
-      await login(email, password);
-      navigate("/");
+      const data = await login(email, password);
+
+      if (data.user?.isAdmin) {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     } catch (err) {
       console.error("Login Error:", err);
       setError(err?.response?.data?.message || "Login failed. Please try again.");
@@ -55,7 +60,7 @@ const Login = () => {
 
         <div className="form-links">
           <p>
-            Don’t have an account? <Link to="/register">Register</Link>
+            Don't have an account? <Link to="/register">Register</Link>
           </p>
           <p>
             <Link to="/forgot-password">Forgot Password?</Link>
