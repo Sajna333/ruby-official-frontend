@@ -19,7 +19,7 @@ const Register = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError(""); // clear error on typing
+    setError("");
   };
 
   const handleSubmit = async (e) => {
@@ -29,7 +29,6 @@ const Register = () => {
 
     const { name, email, password, confirmPassword } = formData;
 
-    // ✅ Frontend validations
     if (!name || !email || !password || !confirmPassword) {
       setError("Please fill in all fields.");
       return;
@@ -50,7 +49,6 @@ const Register = () => {
     try {
       const data = await registerUser(name, email, password);
 
-      // ✅ Save token and user info
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify({
         _id: data._id,
@@ -60,7 +58,6 @@ const Register = () => {
 
       setSuccess("Registration successful! Redirecting...");
 
-      // ✅ Redirect to home after 1.5 seconds
       setTimeout(() => navigate("/"), 1500);
 
     } catch (err) {
@@ -77,29 +74,24 @@ const Register = () => {
   return (
     <div style={containerStyle}>
       <div style={cardStyle}>
-        {/* Logo / Title */}
         <div style={{ textAlign: "center", marginBottom: "28px" }}>
           <h2 style={titleStyle}>Create Account</h2>
           <p style={subtitleStyle}>Join Ruby Official today</p>
         </div>
 
-        {/* Error Message */}
         {error && (
           <div style={errorBoxStyle}>
             ⚠️ {error}
           </div>
         )}
 
-        {/* Success Message */}
         {success && (
           <div style={successBoxStyle}>
             ✅ {success}
           </div>
         )}
 
-        {/* Form */}
         <form onSubmit={handleSubmit} noValidate>
-          {/* Name */}
           <div style={fieldStyle}>
             <label style={labelStyle}>Full Name</label>
             <input
@@ -113,7 +105,6 @@ const Register = () => {
             />
           </div>
 
-          {/* Email */}
           <div style={fieldStyle}>
             <label style={labelStyle}>Email Address</label>
             <input
@@ -127,7 +118,6 @@ const Register = () => {
             />
           </div>
 
-          {/* Password */}
           <div style={fieldStyle}>
             <label style={labelStyle}>Password</label>
             <input
@@ -141,7 +131,6 @@ const Register = () => {
             />
           </div>
 
-          {/* Confirm Password */}
           <div style={fieldStyle}>
             <label style={labelStyle}>Confirm Password</label>
             <input
@@ -155,7 +144,6 @@ const Register = () => {
             />
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             disabled={loading}
@@ -169,7 +157,6 @@ const Register = () => {
           </button>
         </form>
 
-        {/* Login Link */}
         <p style={bottomTextStyle}>
           Already have an account?{" "}
           <Link to="/login" style={linkStyle}>
@@ -181,7 +168,6 @@ const Register = () => {
   );
 };
 
-// ─── Styles ───────────────────────────────────────────────
 const containerStyle = {
   minHeight: "100vh",
   display: "flex",
@@ -242,7 +228,7 @@ const inputStyle = {
 const buttonStyle = {
   width: "100%",
   padding: "13px",
-  backgroundColor: "#d81b60",
+  backgroundColor: "#556b2f",
   color: "#ffffff",
   border: "none",
   borderRadius: "8px",
@@ -280,7 +266,7 @@ const bottomTextStyle = {
 };
 
 const linkStyle = {
-  color: "#d81b60",
+  color: "#556b2f",
   fontWeight: "600",
   textDecoration: "none",
 };

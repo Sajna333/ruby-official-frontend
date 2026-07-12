@@ -19,6 +19,10 @@
   font-family: "Poppins", sans-serif;
 }
 
+.product-info h2 {
+  color: #556b2f;
+}
+
 .product-title {
   font-size: 28px;
   font-weight: 600;
@@ -49,7 +53,6 @@
   color: #333;
 }
 
-/* Color selector */
 .color-options {
   display: flex;
   gap: 10px;
@@ -73,7 +76,6 @@
   border-color: #000;
 }
 
-/* Quantity section */
 .quantity-section {
   margin-top: 20px;
 }
@@ -94,7 +96,6 @@
   cursor: pointer;
 }
 
-/* Buttons */
 .buttons {
   display: flex;
   gap: 15px;
@@ -125,10 +126,10 @@
 }
 
 .buy-btn {
-  background: #ff6600;
+  background: #b8860b;
   color: #fff;
 }
 
 .buy-btn:hover {
-  background: #ff8533;
+  background: #a3760a;
 }
