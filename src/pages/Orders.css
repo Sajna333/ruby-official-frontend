@@ -1,6 +1,6 @@
 /* Orders.css - mobile-focused order list */
 .orders-page { padding: 12px; max-width: 720px; margin: 0 auto; font-family: Inter, sans-serif; }
-.orders-header h2 { margin: 8px 0 14px; font-size: 18px; }
+.orders-header h2 { margin: 8px 0 14px; font-size: 18px; color: #556b2f; }
 .orders-list { display: flex; flex-direction: column; gap: 12px; }
 
 .order-card {
@@ -21,6 +21,24 @@
 .status { color:#2b8a3e; font-weight:600; }
 .order-sub { color:#666; font-size:13px; margin-top:6px; }
 .order-arrow { color:#bbb; font-size:22px; padding-left:6px; }
+
+.no-orders {
+  text-align: center;
+  padding: 40px 20px;
+  color: #888;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #f0f0f0;
+}
+
+.orders-error {
+  background: #fff4e5;
+  color: #a15c00;
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
 
 @media (min-width: 900px) {
   .orders-page { padding: 24px; }
