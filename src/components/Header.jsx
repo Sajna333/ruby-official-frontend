@@ -87,6 +87,11 @@ const Header = () => {
               <span className="user-name">
                 <FiUser /> {user.name || "User"}
               </span>
+              {user.isAdmin && (
+                <Link to="/admin" className="admin-btn-header">
+                  Admin
+                </Link>
+              )}
               <button className="logout-btn" onClick={handleLogout}>
                 Logout
               </button>
@@ -125,6 +130,11 @@ const Header = () => {
           <Link to="/contact" onClick={() => setSidebarOpen(false)}>
             Contact
           </Link>
+          {user?.isAdmin && (
+            <Link to="/admin" onClick={() => setSidebarOpen(false)}>
+              Admin Panel
+            </Link>
+          )}
         </nav>
       </div>
 
