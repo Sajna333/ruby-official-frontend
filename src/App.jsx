@@ -27,6 +27,7 @@ import OrderDetails from "./pages/OrderDetails";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminProducts from "./pages/AdminProducts";
 import AdminOrders from "./pages/AdminOrders";
+import AdminUsers from "./pages/AdminUsers";
 
 const App = () => {
   return (
@@ -58,6 +59,7 @@ const App = () => {
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/products" element={<AdminProducts />} />
               <Route path="/admin/orders" element={<AdminOrders />} />
+              <Route path="/admin/users" element={<AdminUsers />} />
             </Routes>
           </main>
           <Footer />
