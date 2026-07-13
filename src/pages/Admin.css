@@ -34,7 +34,8 @@
   min-width: 220px;
 }
 
-.btn {
+/* Scoped to admin pages only — prevents leaking onto public site buttons */
+.admin-page .btn {
   padding: 10px 14px;
   border-radius: 8px;
   border: none;
@@ -43,7 +44,7 @@
   color: white;
 }
 
-.btn.export {
+.admin-page .btn.export {
   background: #0f9d58;
 }
 
